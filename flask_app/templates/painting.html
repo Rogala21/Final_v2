@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <title>Painting</title>
+    <style>
+        #main {
+            display: flex;
+            justify-content: space-evenly;
+        }
+        #painting {
+            border: 1px solid purple;
+            padding: 2em;
+        }
+        
+    </style>
+</head>
+<body>
+    <div id="header">
+        <h1 class="text-center">{{painting.title}}</h1>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            <a href="/dashboard" class="btn btn-primary me-md-2">Home</a>
+            <a href="/logout" class="btn btn-danger me-md-2">Logout</a>
+        </div>
+    </div>
+    <div id="main">
+        <div id="painting">
+            <dt>Painted by:</dt>
+            <p> {{painting.painter}}</p>
+            <dt>Description: </dt>
+            <p>{{painting.description}}</p>
+            <dt>Price: </dt>
+            <p>{{painting.price}}</p>
+            <dt>Number of Purchased:</dt>
+            <p>{{painting.number_of_sold}}</p>
+            {% if painting.number_of_sold < painting.quantity %}
+            {% if painting.buy_sell == 'buy' %}
+            <a href="/buy/{{painting.id}}" class="btn btn-primary me-md-2">Buy</a>
+            {% elif painting.buy_sell == 'sell' %}
+            <a href="/sell/{{painting.id}}" class="btn btn-primary me-md-2">Sell</a>
+            {% endif %}
+            {% elif painting.number_of_sold == painting.quantity and painting.buy_sell == 'sell' %}
+            <p>Sold Out!</p>
+            <a href="/sell/{{painting.id}}" class="btn btn-primary me-md-2">Sell</a>
+            {% else %}
+            <p>Sold Out</p>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

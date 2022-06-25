@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <title>Dashboard</title>
+    <style>
+        #main {
+            display: flex;
+            justify-content: space-evenly;
+        }
+        #paintings {
+            border: 1px solid orange;
+            padding: 2em;
+            margin-top: 5px;
+        }
+        #owned_paintings {
+            border: 1px solid red;
+            padding: 2em;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div id="header">
+        <h1 class="text-center">Welcome {{user.first_name}}!!!</h1>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            <a href="/dashboard/new/painting" class="btn btn-primary me-md-2">New Painting</a>
+            <a href="/logout" class="btn btn-danger me-md-2">Logout</a>
+        </div>
+    </div>
+    <div id="main">
+        <div id="paintings" >
+            <h3>Paintings</h3>
+            <table class="table table-dark">
+                <tr>
+                    <th scope="col">Title</th>
+                    <th scope="col">Painter</th>
+                    <th scope="col"></th>
+                </tr>
+                {% for painting in paintings %}
+                <tr>
+                    <td><a href="/dashboard/painting/{{painting.id}}">{{painting.title}}</a></td>
+                    <td>{{painting.painter}}</td>
+                    <td>{% if user.id == painting.painter_id %}<a href="/dashboard/edit/painting/{{painting.id}}">Edit</a> | <a href="/dashboard/delete/{{painting.id}}/process">Delete</a>{% endif %}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <div id="owned_paintings">
+            <h3>Owned Paintings</h3>
+            <table class="table table-dark">
+                <tr>
+                    <th scope="col">Title</th>
+                    <th scope="col">Painter</th>
+                </tr>
+                {% for own_painting in own_paintings %}
+                <tr>
+                    <td><a href="/dashboard/painting/{{own_painting.id}}">{{own_painting.title}}</a></td>
+                    <td>{{own_painting.painter}}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</body>
+</html>
